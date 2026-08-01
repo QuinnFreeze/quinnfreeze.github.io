@@ -7,202 +7,435 @@
   <meta name="description" content="李秋易 (Wynn Freeze / Quinn Freeze) 的个人主页">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #fafafa;
-      --fg: #1a1a2e;
-      --muted: #6b6b80;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --card-bg: #ffffff;
-      --border: #e5e5f0;
-      --shadow: 0 4px 24px rgba(26, 26, 46, 0.06);
-      --radius: 16px;
+      --bg: #f8f9fc;
+      --fg: #1a1c2e;
+      --fg-soft: #3a3c4e;
+      --muted: #6e7088;
+      --subtle: #9a9cb0;
+      --accent: #5b5ef7;
+      --accent-glow: rgba(91, 94, 247, 0.15);
+      --accent2: #f472b6;
+      --card: #ffffff;
+      --card-border: #e8e9f2;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.04);
+      --shadow: 0 8px 32px rgba(0,0,0,.06);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,.08);
+      --radius: 20px;
+      --radius-sm: 12px;
+      --gradient-hero: linear-gradient(135deg, #5b5ef7 0%, #8b5cf6 40%, #f472b6 100%);
+      --gradient-card: linear-gradient(135deg, #f0f1ff 0%, #fdf2f8 100%);
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #0f0f1a;
-        --fg: #f0f0f5;
-        --muted: #8b8ba8;
-        --accent: #60a5fa;
-        --accent-hover: #93c5fd;
-        --card-bg: #1a1a2e;
-        --border: #2a2a4a;
-        --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        --bg: #0a0a16;
+        --fg: #e8e9f2;
+        --fg-soft: #c8c9d8;
+        --muted: #8e90a8;
+        --subtle: #5e6078;
+        --card: #14142a;
+        --card-border: #1e1e3a;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,.2);
+        --shadow: 0 8px 32px rgba(0,0,0,.3);
+        --shadow-lg: 0 16px 48px rgba(0,0,0,.4);
+        --gradient-card: linear-gradient(135deg, #1a1a38 0%, #261830 100%);
       }
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg); color: var(--fg);
+      line-height: 1.7; min-height: 100vh;
+      overflow-x: hidden;
     }
-    .container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem; width: 100%; flex: 1; }
-    header { text-align: center; margin-bottom: 3rem; animation: fadeUp 0.8s ease-out; }
+
+    /* HERO */
+    .hero {
+      position: relative; text-align: center;
+      padding: 5rem 1.5rem 4rem; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute;
+      top: -50%; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: var(--accent-glow);
+      border-radius: 50%; filter: blur(120px);
+      z-index: 0; pointer-events: none;
+    }
+    .hero::after {
+      content: ''; position: absolute;
+      top: 20%; right: 30%;
+      width: 300px; height: 300px;
+      background: rgba(244, 114, 182, 0.12);
+      border-radius: 50%; filter: blur(80px);
+      z-index: 0; pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; }
     .avatar {
-      width: 120px; height: 120px; border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 1.5rem; box-shadow: var(--shadow);
-      border: 3px solid var(--border);
+      width: 140px; height: 140px; border-radius: 50%;
+      object-fit: cover; margin-bottom: 2rem;
+      box-shadow: 0 0 0 5px var(--card), 0 0 0 7px var(--accent), var(--shadow-lg);
+      transition: transform 0.4s ease;
     }
-    h1 { font-family: 'Noto Serif SC', serif; font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
-    .subtitle { color: var(--muted); font-size: 1.1rem; font-weight: 400; margin-bottom: 1rem; }
-    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 1rem; }
+    .avatar:hover { transform: scale(1.05) rotate(-2deg); }
+    .hero h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 700; letter-spacing: -0.03em;
+      background: var(--gradient-hero);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+    .hero .name-en {
+      font-size: 1.05rem; color: var(--muted);
+      font-weight: 400; margin-bottom: 0.75rem;
+    }
+    .hero .role {
+      font-size: 1.15rem; color: var(--fg-soft);
+      font-weight: 500; margin-bottom: 1.5rem;
+    }
+    .hero .role .dot { color: var(--accent); margin: 0 0.35rem; }
+
+    .tag-wrapper {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      justify-content: center; margin-top: 0.5rem;
+    }
     .tag {
-      background: var(--card-bg); border: 1px solid var(--border);
-      padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.85rem;
-      color: var(--muted); transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.4rem 1rem; border-radius: 100px;
+      font-size: 0.82rem; font-weight: 500;
+      background: var(--card); border: 1px solid var(--card-border);
+      color: var(--muted); transition: all 0.25s;
     }
-    .tag:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-    section { margin-bottom: 3rem; animation: fadeUp 0.8s ease-out backwards; }
+    .tag::before {
+      content: ''; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--accent);
+      opacity: 0.6;
+    }
+    .tag:hover {
+      border-color: var(--accent); color: var(--accent);
+      transform: translateY(-2px); box-shadow: var(--shadow-sm);
+    }
+
+    /* MAIN */
+    .main { max-width: 780px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    section { margin-bottom: 3.5rem; }
+
+    .section-label {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-label .icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; background: var(--accent);
+      color: white; flex-shrink: 0;
+    }
+    .section-label h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.4rem; font-weight: 600;
+    }
+
+    /* ABOUT */
+    .about-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius); padding: 2rem 2.2rem;
+      position: relative; overflow: hidden;
+    }
+    .about-card p {
+      color: var(--fg-soft); font-size: 1.02rem;
+      line-height: 1.9; position: relative; z-index: 1;
+    }
+    .about-card p + p { margin-top: 1rem; }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .skill-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm); padding: 1.6rem 1.8rem;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .skill-card::after {
+      content: ''; position: absolute;
+      top: -20px; right: -20px;
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--accent-glow);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .skill-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: var(--accent);
+    }
+    .skill-card:hover::after { opacity: 1; }
+    .skill-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .skill-card h3 {
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 0.5rem; position: relative; z-index: 1;
+    }
+    .skill-card p {
+      color: var(--muted); font-size: 0.88rem;
+      line-height: 1.7; position: relative; z-index: 1;
+    }
+
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+    .project-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm); padding: 1.8rem 2rem;
+      transition: all 0.3s; display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .project-card:hover {
+      transform: translateY(-4px); box-shadow: var(--shadow);
+      border-color: var(--accent);
+    }
+    .project-card .project-badge {
+      display: inline-block; font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--accent); background: var(--accent-glow);
+      padding: 0.2rem 0.7rem; border-radius: 100px;
+      align-self: flex-start;
+    }
+    .project-card h3 { font-size: 1.1rem; font-weight: 700; }
+    .project-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; flex: 1; }
+    .project-card .project-link {
+      font-size: 0.85rem; font-weight: 600; color: var(--accent);
+      text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;
+      margin-top: 0.25rem; transition: gap 0.2s;
+    }
+    .project-card .project-link:hover { gap: 0.6rem; }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 3rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 14px; top: 8px; bottom: 8px;
+      width: 2px; background: linear-gradient(to bottom, var(--accent), var(--accent2));
+      border-radius: 1px;
+    }
+    .tl-item {
+      position: relative; padding-bottom: 2.5rem;
+    }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      position: absolute; left: -3rem; top: 2px;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--card); border: 3px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1; transition: transform 0.25s;
+    }
+    .tl-dot::after {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+    }
+    .tl-item:hover .tl-dot { transform: scale(1.2); }
+    .tl-date {
+      font-size: 0.8rem; font-weight: 600; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem;
+    }
+    .tl-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem; }
+    .tl-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+    /* CONTACTS */
+    .contact-row {
+      display: flex; flex-wrap: wrap; gap: 0.75rem;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 1.6rem; border-radius: 100px;
+      font-size: 0.9rem; font-weight: 600; text-decoration: none;
+      background: var(--card); border: 1.5px solid var(--card-border);
+      color: var(--fg-soft); transition: all 0.25s;
+    }
+    .cta-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .cta-btn:hover {
+      border-color: var(--accent); color: var(--accent);
+      transform: translateY(-2px); box-shadow: var(--shadow-sm);
+    }
+    .cta-btn.primary {
+      background: var(--accent); border-color: var(--accent); color: white;
+    }
+    .cta-btn.primary:hover {
+      background: var(--accent-hover, #4a4de0); border-color: var(--accent-hover, #4a4de0);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 2.5rem 1.5rem;
+      color: var(--subtle); font-size: 0.82rem;
+      border-top: 1px solid var(--card-border);
+      margin-top: 2rem;
+    }
+    footer .heart { color: var(--accent2); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .hero { animation: fadeIn 0.6s ease-out; }
+    section { animation: fadeUp 0.7s ease-out backwards; }
     section:nth-child(2) { animation-delay: 0.1s; }
     section:nth-child(3) { animation-delay: 0.2s; }
     section:nth-child(4) { animation-delay: 0.3s; }
     section:nth-child(5) { animation-delay: 0.4s; }
-    h2 { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent); display: inline-block; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
-    .card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.5rem; transition: all 0.3s;
-      box-shadow: var(--shadow);
+
+    @media (max-width: 600px) {
+      .hero { padding: 3.5rem 1rem 3rem; }
+      .about-card { padding: 1.5rem; }
+      .timeline { padding-left: 2.5rem; }
+      .tl-dot { left: -2.5rem; width: 24px; height: 24px; }
     }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26, 26, 46, 0.1); }
-    .card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--fg); }
-    .card p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
-    .links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .link-btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 1.5rem; background: var(--card-bg);
-      border: 1px solid var(--border); border-radius: 100px;
-      color: var(--fg); text-decoration: none; font-weight: 500;
-      font-size: 0.9rem; transition: all 0.2s;
-    }
-    .link-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); }
-    .link-btn.primary { background: var(--accent); border-color: var(--accent); color: white; }
-    .link-btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: white; }
-    .timeline { position: relative; padding-left: 1.5rem; }
-    .timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--border); }
-    .timeline-item { position: relative; padding-bottom: 2rem; }
-    .timeline-item:last-child { padding-bottom: 0; }
-    .timeline-dot { position: absolute; left: -1.5rem; top: 0.25rem; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg); box-shadow: 0 0 0 2px var(--accent); z-index: 1; }
-    .timeline-date { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.25rem; }
-    .timeline-title { font-weight: 600; margin-bottom: 0.25rem; }
-    .timeline-desc { color: var(--muted); font-size: 0.95rem; }
-    footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: auto; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 600px) { h1 { font-size: 2rem; } .container { padding: 2rem 1rem; } }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
+
+  <header class="hero">
+    <div class="hero-content">
       <img src="avatar.jpeg" alt="李秋易" class="avatar">
       <h1>李秋易</h1>
-      <p class="subtitle">Wynn Freeze / Quinn Freeze</p>
-      <p class="subtitle">iOS Developer • AI Explorer • Builder</p>
-      <div class="tags">
+      <p class="name-en">Wynn Freeze / Quinn Freeze</p>
+      <p class="role">
+        iOS Developer<span class="dot">·</span>AI Explorer<span class="dot">·</span>Builder
+      </p>
+      <div class="tag-wrapper">
         <span class="tag">iOS / Swift</span>
         <span class="tag">SwiftUI</span>
         <span class="tag">AI / LLMs</span>
         <span class="tag">Automation</span>
         <span class="tag">Open Source</span>
       </div>
-    </header>
+    </div>
+  </header>
+
+  <main class="main">
 
     <section>
-      <h2>关于我</h2>
-      <div class="card">
+      <div class="section-label">
+        <div class="icon">👋</div>
+        <h2>关于我</h2>
+      </div>
+      <div class="about-card">
         <p>专注于 iOS 原生开发与 AI 应用落地，喜欢用代码解决实际问题，也热衷探索新技术边界。目前在构建基于 Minis (iSH + AI) 的个人智能助手生态，让手机真正成为「随身超级计算机」。</p>
-        <p style="margin-top: 1rem;">信奉「少即是多」，追求极简、高效、可控的工具链。业余时间折腾自动化工作流、捣鼓各种 CLI 工具、写写开源小项目。</p>
+        <p>信奉「少即是多」，追求极简、高效、可控的工具链。业余时间折腾自动化工作流、捣鼓各种 CLI 工具、写写开源小项目。</p>
       </div>
     </section>
 
     <section>
-      <h2>技能栈</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>iOS & Apple 生态</h3>
+      <div class="section-label">
+        <div class="icon">🛠</div>
+        <h2>技能栈</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">🍎</div>
+          <h3>iOS &amp; Apple 生态</h3>
           <p>Swift / SwiftUI / UIKit / Combine / Core Data / SwiftData / TestFlight / App Store Connect / Shortcuts / HomeKit / HealthKit</p>
         </div>
-        <div class="card">
-          <h3>AI & LLM 应用</h3>
-          <p>Prompt Engineering / RAG / Function Calling / Agents / Local Models (llama.cpp, MLX) / API Integration (OpenAI, Anthropic, Gemini, etc.)</p>
+        <div class="skill-card">
+          <div class="skill-icon">🧠</div>
+          <h3>AI &amp; LLM 应用</h3>
+          <p>Prompt Engineering / RAG / Function Calling / Agents / Local Models (llama.cpp, MLX) / API Integration (OpenAI, Anthropic, Gemini)</p>
         </div>
-        <div class="card">
-          <h3>后端 & 基础设施</h3>
-          <p>Python / Node.js / SQLite / PostgreSQL / Docker / GitHub Actions / Cloudflare Workers / Linux (Alpine/musl) / Shell Scripting</p>
+        <div class="skill-card">
+          <div class="skill-icon">☁️</div>
+          <h3>后端 &amp; 基础设施</h3>
+          <p>Python / Node.js / SQLite / PostgreSQL / Docker / GitHub Actions / Cloudflare Workers / Linux (Alpine/musl) / Shell</p>
         </div>
-        <div class="card">
-          <h3>工具链 & 效率</h3>
-          <p>Git / CLI / Vim / Raycast / Alfred / Obsidian / Notion API / Make / Just / jq / ripgrep / fzf / HTTPie</p>
+        <div class="skill-card">
+          <div class="skill-icon">⚡</div>
+          <h3>工具链 &amp; 效率</h3>
+          <p>Git / CLI / Vim / Obsidian / Notion API / Make / Just / jq / ripgrep / fzf / HTTPie / Raycast / Alfred</p>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>精选项目</h2>
-      <div class="grid">
-        <div class="card">
+      <div class="section-label">
+        <div class="icon">✦</div>
+        <h2>精选项目</h2>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <span class="project-badge">Featured</span>
           <h3>Minis AI Assistant</h3>
           <p>运行在 iOS 上的本地 AI 助手，集成 iSH Linux 环境，支持 Shell、浏览器自动化、Apple 框架调用、技能系统扩展。</p>
+          <a href="https://github.com/QuinnFreeze" class="project-link" target="_blank" rel="noopener">
+            View on GitHub <span aria-hidden="true">→</span>
+          </a>
         </div>
-        <div class="card">
+        <div class="project-card">
+          <span class="project-badge">Tools</span>
           <h3>各类开源小工具</h3>
-          <p>GitHub Actions 自动化、CLI 效率工具、数据抓取脚本、Notion/Obsidian 同步、健康数据分析等。</p>
+          <p>GitHub Actions 自动化、CLI 效率工具、数据抓取脚本、Notion/Obsidian 同步、健康数据分析等实用轮子。</p>
+          <a href="https://github.com/QuinnFreeze?tab=repositories" class="project-link" target="_blank" rel="noopener">
+            Explore repos <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>经历</h2>
+      <div class="section-label">
+        <div class="icon">⏳</div>
+        <h2>经历</h2>
+      </div>
       <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-date">2024 – 至今</div>
-          <div class="timeline-title">独立开发者 / AI 应用探索者</div>
-          <div class="timeline-desc">全栈产品开发，专注 iOS + AI 融合，构建个人数字化基础设施。</div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2024 – 至今</div>
+          <div class="tl-title">独立开发者 / AI 应用探索者</div>
+          <div class="tl-desc">全栈产品开发，专注 iOS + AI 融合，构建个人数字化基础设施。</div>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-date">2022 – 2024</div>
-          <div class="timeline-title">高中生开发者 / 自学编程</div>
-          <div class="timeline-desc">系统学习 Swift / SwiftUI，开发多个个人 App 上架 App Store，探索 AI 编程辅助。</div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2022 – 2024</div>
+          <div class="tl-title">高中生开发者 / 自学编程</div>
+          <div class="tl-desc">系统学习 Swift / SwiftUI，开发多个个人 App 上架 App Store，探索 AI 编程辅助。</div>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-date">2020 – 2022</div>
-          <div class="timeline-title">接触编程 / 算法竞赛</div>
-          <div class="timeline-desc">初中开始接触 Python、C++，参加 NOIP 等算法竞赛，打下编程基础。</div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2020 – 2022</div>
+          <div class="tl-title">接触编程 / 算法竞赛</div>
+          <div class="tl-desc">初中开始接触 Python、C++，参加 NOIP 等算法竞赛，打下编程基础。</div>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>联系方式</h2>
-      <div class="links">
-        <a href="https://github.com/QuinnFreeze" class="link-btn" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+      <div class="section-label">
+        <div class="icon">💬</div>
+        <h2>联系方式</h2>
+      </div>
+      <div class="contact-row">
+        <a href="https://github.com/QuinnFreeze" class="cta-btn primary" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
           GitHub
         </a>
-        <a href="mailto:qiuf1429@gmail.com" class="link-btn" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:qiuf1429@gmail.com" class="cta-btn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           Email
         </a>
-        <a href="https://wa.me/447394410661?text=Hello%20%40xiaoqiuyi" class="link-btn" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <a href="https://wa.me/447394410661?text=Hello%20%40xiaoqiuyi" class="cta-btn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           WhatsApp
         </a>
       </div>
     </section>
-  </div>
+
+  </main>
+
   <footer>
-    <p>Built with ♥ by 李秋易 · Hosted on GitHub Pages</p>
+    Built with <span class="heart">♥</span> by 李秋易 · Hosted on GitHub Pages
   </footer>
+
 </body>
 </html>
